@@ -20,7 +20,6 @@ router.post('/login', [
   body('password').exists().withMessage('Password is required')
 ], login);
 
-<<<<<<< HEAD
 // Check if email or phone exists
 router.post('/check-exists', [
   body('email').isEmail().withMessage('Please include a valid email'),
@@ -70,4 +69,5 @@ router.get('/me', auth, getMe);
 
 
 module.exports = router;
+
 
