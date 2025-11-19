@@ -1,7 +1,14 @@
 const express = require('express');
+<<<<<<< HEAD
+const { body, validationResult } = require('express-validator');
+const { register, login, getMe } = require('../controllers/authController');
+const { auth } = require('../middleware/auth');
+const User = require('../models/User');
+=======
 const { body } = require('express-validator');
 const { register, login, getMe } = require('../controllers/authController');
 const { auth } = require('../middleware/auth');
+>>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
 
 const router = express.Router();
 
@@ -20,6 +27,51 @@ router.post('/login', [
   body('password').exists().withMessage('Password is required')
 ], login);
 
+<<<<<<< HEAD
+// Check if email or phone exists
+router.post('/check-exists', [
+  body('email').isEmail().withMessage('Please include a valid email'),
+  body('phone').notEmpty().withMessage('Phone number is required')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, phone } = req.body;
+
+    // Check if user exists by email or phone
+    const existingUser = await User.findOne({
+      $or: [{ email }, { phone }]
+    });
+
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return res.status(400).json({
+          message: 'Email already exists',
+          errorCode: 'EMAIL_EXISTS'
+        });
+      }
+      if (existingUser.phone === phone) {
+        return res.status(400).json({
+          message: 'Phone number already exists',
+          errorCode: 'PHONE_EXISTS'
+        });
+      }
+    }
+
+    res.json({
+      success: true,
+      message: 'Email and phone are available'
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+=======
+>>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
 // Get current user
 router.get('/me', auth, getMe);
 

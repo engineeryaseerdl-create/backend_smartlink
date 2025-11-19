@@ -4,7 +4,11 @@ const User = require('../models/User');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
+<<<<<<< HEAD
+    expiresIn: process.env.JWT_EXPIRE || '7d'
+=======
     expiresIn: process.env.JWT_EXPIRE
+>>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
   });
 };
 
@@ -17,10 +21,30 @@ const register = async (req, res) => {
 
     const { name, email, password, phone, role, location, businessName, vehicleType } = req.body;
 
+<<<<<<< HEAD
+    // Check if user exists by email or phone
+    const existingUser = await User.findOne({
+      $or: [{ email }, { phone }]
+    });
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return res.status(400).json({
+          message: 'Email already exists',
+          errorCode: 'EMAIL_EXISTS'
+        });
+      }
+      if (existingUser.phone === phone) {
+        return res.status(400).json({
+          message: 'Phone number already exists',
+          errorCode: 'PHONE_EXISTS'
+        });
+      }
+=======
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
+>>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
     }
 
     // Create user
