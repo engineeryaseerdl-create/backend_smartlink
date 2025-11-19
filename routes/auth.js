@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const { register, login, getMe } = require('../controllers/authController');
 const { auth } = require('../middleware/auth');
 const User = require('../models/User');
+
 const router = express.Router();
 
 // Register
@@ -33,7 +34,6 @@ router.post('/check-exists', [
 
     const { email, phone } = req.body;
 
-    // Check if user exists by email or phone
     const existingUser = await User.findOne({
       $or: [{ email }, { phone }]
     });
@@ -57,17 +57,13 @@ router.post('/check-exists', [
       success: true,
       message: 'Email and phone are available'
     });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-=======
->>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
 // Get current user
 router.get('/me', auth, getMe);
 
-
 module.exports = router;
-
-
