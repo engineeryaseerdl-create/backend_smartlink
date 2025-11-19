@@ -34,6 +34,7 @@ router.post('/check-exists', [
 
     const { email, phone } = req.body;
 
+    // Check if user exists by email or phone
     const existingUser = await User.findOne({
       $or: [{ email }, { phone }]
     });
@@ -57,7 +58,6 @@ router.post('/check-exists', [
       success: true,
       message: 'Email and phone are available'
     });
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
