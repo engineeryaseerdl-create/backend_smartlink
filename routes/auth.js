@@ -4,12 +4,6 @@ const { body, validationResult } = require('express-validator');
 const { register, login, getMe } = require('../controllers/authController');
 const { auth } = require('../middleware/auth');
 const User = require('../models/User');
-=======
-const { body } = require('express-validator');
-const { register, login, getMe } = require('../controllers/authController');
-const { auth } = require('../middleware/auth');
->>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
-
 const router = express.Router();
 
 // Register
@@ -74,5 +68,6 @@ router.post('/check-exists', [
 >>>>>>> f4d8515b94dad07e14eef99fe79a9fbc45e50a12
 // Get current user
 router.get('/me', auth, getMe);
+
 
 module.exports = router;
